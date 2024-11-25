@@ -80,8 +80,5 @@ namespace APICatalogo.Controllers
 
             return Ok(produto);
         }
-
-
-
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APICatalogo.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ProdutosController : ControllerBase
     {
@@ -16,20 +16,36 @@ namespace APICatalogo.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public ActionResult <IEnumerable<Produto>> Get()
+        // ele vai estar atendendo em mais de uma rota
+        // usando /primeiro vai ignorar a rota definida anteriormente.
+        [HttpGet("/primeiro")]
+        [HttpGet("primeiro")]
+        public ActionResult <Produto> GetPrimeiro()
         {
-            var produtos =_context.Produtos.ToList();
-            if(produtos is null)
+            var produto =_context.Produtos.FirstOrDefault();
+            if(produto is null)
+            {
+                return NotFound();
+            }
+            return produto;
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Produto>> Get()
+        {
+            var produtos = _context.Produtos.ToList();
+            if (produtos is null)
             {
                 return NotFound("Produtos não encontrados");
             }
             return produtos;
         }
 
-        [HttpGet("{id:int}", Name="ObterProduto")]
+        // Usando {id:int:min(1)} só pode ser um valor maior que 0 (restrição de rota)
+        [HttpGet("{id:int:min(1)}", Name="ObterProduto")]
         public ActionResult <Produto> Get(int id)
         {
+
             var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
             if (produto is null) 
             {
@@ -66,7 +82,7 @@ namespace APICatalogo.Controllers
             return Ok (produto);
         }
 
-        [HttpDelete("{id:int}")]
+         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id) 
         {
             var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);

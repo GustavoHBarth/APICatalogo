@@ -2,6 +2,7 @@
 using APICatalogo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo.Controllers
 {
@@ -39,6 +40,14 @@ namespace APICatalogo.Controllers
                 return NotFound("Produtos não encontrados");
             }
             return produtos;
+        }
+
+
+        // usando metodo async 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Produto>>> Get2()
+        {
+            return await _context.Produtos.AsNoTracking().ToListAsync();
         }
 
         // Usando {id:int:min(1)} só pode ser um valor maior que 0 (restrição de rota)

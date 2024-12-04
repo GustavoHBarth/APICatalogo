@@ -2,6 +2,7 @@
 using APICatalogo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo.Controllers
@@ -50,13 +51,15 @@ namespace APICatalogo.Controllers
             return await _context.Produtos.AsNoTracking().ToListAsync();
         }
 
-        // Usando {id:int:min(1)} só pode ser um valor maior que 0 (restrição de rota)
-        [HttpGet("{id:int:min(1)}", Name="ObterProduto")]
-        public ActionResult <Produto> Get(int id)
+
+
+        [HttpGet("{id}", Name="ObterProduto")]
+        public async Task<ActionResult<Produto>> Get (int id, [BindRequired] string name)
         {
 
-            var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
-            if (produto is null) 
+           var produto = await _context.Produtos.AsNoTracking().FirstOrDefaultAsync(p => p.ProdutoId == id);
+
+            if (produto == null) 
             {
                 return NotFound("Produto não encontrado");
             }

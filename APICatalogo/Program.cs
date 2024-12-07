@@ -1,6 +1,6 @@
 using APICatalogo.Context;
-using APICatalogo.Services;
 using Microsoft.EntityFrameworkCore;
+using APICatalogo.Services;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

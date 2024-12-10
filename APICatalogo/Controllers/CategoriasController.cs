@@ -1,4 +1,5 @@
 ﻿using APICatalogo.Context;
+using APICatalogo.Filters;
 using APICatalogo.Models;
 using APICatalogo.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -32,12 +33,14 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet("UsandoSemFromServices/{nome}")]
+
         public ActionResult<string> GetSaudacaoSemFromServices(IMeuServico meuServico, string nome)
         {
             return meuServico.Saudacao(nome);
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(ApiLogginFilter))]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
             try

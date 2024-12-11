@@ -3,11 +3,14 @@ using APICatalogo.Filters;
 using APICatalogo.Models;
 using APICatalogo.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Framework;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace APICatalogo.Controllers
 {
+    [Produces("application/json")]
     [Route("[controller]")]
     [ApiController]
     public class CategoriasController : ControllerBase
@@ -15,10 +18,12 @@ namespace APICatalogo.Controllers
         private readonly AppDbContext _context;
         private readonly IConfiguration _configuration;
 
+
         public CategoriasController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
+
         }
 
         [HttpGet("LerArquivoConfiguracao")]

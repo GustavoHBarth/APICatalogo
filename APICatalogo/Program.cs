@@ -4,6 +4,7 @@ using APICatalogo.Services;
 using System.Text.Json.Serialization;
 using APICatalogo.Extensions;
 using APICatalogo.Filters;
+using APICatalogo.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add(typeof(ApiExcepitonFilter));
+    options.Filters.Add(typeof(ApiExceptionFilter));
 })
     .AddJsonOptions(options =>
     {
@@ -34,7 +35,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddTransient<IMeuServico, MeuServico>();
 
-builder.Services.AddScoped<ApiLogginFilter>();
+builder.Services.AddScoped<ApiLoggingFilter>();
+
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 
 var app = builder.Build();
 

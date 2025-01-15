@@ -29,6 +29,18 @@ public class CategoriasController : ControllerBase
     {
         var categorias = _uof.CategoriaRepository.GetCategorias(categoriasParameters);
 
+        return ObterCategorias(categorias);
+    }
+
+    [HttpGet("filter/nome/pagination")]
+    public ActionResult<IEnumerable<CategoriaDTO>> GetCategoriasFiltradas([FromQuery] CategoriasFiltroNome categoriasFiltro)
+    {
+        var categorias = _uof.CategoriaRepository.GetCategoriasFiltroNome(categoriasFiltro);
+
+        return ObterCategorias(categorias);
+    }
+    private ActionResult<IEnumerable<CategoriaDTO>> ObterCategorias(PagedList<Categoria> categorias)
+    {
         var metadata = new
         {
             categorias.TotalCount,
@@ -40,9 +52,7 @@ public class CategoriasController : ControllerBase
         };
 
         Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(metadata));
-
         var categoriasDto = categorias.ToCategoriaDTOList();
-
         return Ok(categoriasDto);
     }
 

@@ -40,6 +40,7 @@ public class ProdutosController : ControllerBase
         Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(metadata));
 
         var produtosDto = _mapper.Map<List<ProdutoDTO>>(produtos);
+
         return Ok(produtosDto);
     }
 

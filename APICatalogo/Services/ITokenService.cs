@@ -1,7 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography;
 
-namespace APICatalogo.Repositories
+namespace APICatalogo.Services
 {
     public interface ITokenService
     {

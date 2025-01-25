@@ -4,6 +4,7 @@ using APICatalogo.Filters;
 using APICatalogo.Logging;
 using APICatalogo.Models;
 using APICatalogo.Repositories;
+using APICatalogo.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

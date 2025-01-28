@@ -3,6 +3,7 @@ using APICatalogo.DTOs.Mappings;
 using APICatalogo.Models;
 using APICatalogo.Pagination;
 using APICatalogo.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text.Json;
@@ -57,6 +58,7 @@ public class CategoriasController : ControllerBase
         return Ok(categoriasDto);
     }
 
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CategoriaDTO>>> Get()
     {
@@ -65,7 +67,7 @@ public class CategoriasController : ControllerBase
         if (categorias is null)
             return NotFound("Não existem categorias...");
 
-       var categoriasDto = categorias.ToCategoriaDTOList();
+        var categoriasDto = categorias.ToCategoriaDTOList();
 
         return Ok(categoriasDto);
     }

@@ -31,7 +31,7 @@ public class AuthController : ControllerBase
         _configuration = configuration;
         _logger = logger;
     }
-
+    //Criar Roles
     [HttpPost]
     [Route("CreateRole")]
     public async Task<IActionResult> CreateRole(string roleName)
@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
         }
         return StatusCode(StatusCodes.Status400BadRequest, new Response { Status = "Error", Message = $"Role already exists!" });
     }
-
+    //Atribuir usuários a roles
     [HttpPost]
     [Route("AddUserToRole")]
     public async Task<IActionResult> AddUserToRole(string email, string roleName)

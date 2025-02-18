@@ -26,6 +26,19 @@ builder.Services.AddControllers(options =>
 })
 .AddNewtonsoftJson();
 
+
+//Politicas CORS por Midlle
+var OrigensComAcessoPermitido = "_origensComAcessoPermitido";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: OrigensComAcessoPermitido,
+        policy =>
+        {
+            policy.WithOrigins("http://www.apirequest.io");
+        });
+});
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
@@ -126,6 +139,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseCors(OrigensComAcessoPermitido);
+
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
